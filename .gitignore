@@ -1,0 +1,23 @@
+## .NET
+bin/
+obj/
+*.user
+*.suo
+*.sln.docstates
+.vs/
+*.csproj.user
+
+## Visual Studio
+*.sln.ide/
+*.sln.VC.db/
+*.sln.VC.opendb
+
+## Logs
+*.log
+
+## Token
+token.txt
+
+## Database
+*.mdf
+*.ldf
