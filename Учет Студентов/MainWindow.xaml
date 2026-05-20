@@ -13,8 +13,12 @@
         </Grid.RowDefinitions>
 
         <!-- Заголовок -->
-        <TextBlock Grid.Row="0" Text="Учёт студентов" FontSize="24" FontWeight="Bold" 
-                   HorizontalAlignment="Center" Margin="0,0,0,10"/>
+        <Grid Grid.Row="0" Margin="0,0,0,10">
+            <TextBlock Text="Учёт студентов" FontSize="24" FontWeight="Bold" 
+                       HorizontalAlignment="Center"/>
+            <Button x:Name="AdminButton" Content="Управление админами" 
+                    Width="180" HorizontalAlignment="Right" Click="AdminButton_Click"/>
+        </Grid>
 
         <!-- Панель поиска и фильтрации -->
         <Border Grid.Row="1" BorderBrush="#ccc" BorderThickness="1" Padding="10" Margin="0,0,0,10" CornerRadius="8">

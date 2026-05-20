@@ -3,6 +3,8 @@ using System.Windows;
 using System.Windows.Controls;
 using StudentAppWPF.Data;
 using StudentAppWPF.Models;
+using System.Configuration;
+using System.Data.SqlClient;
 
 namespace StudentAppWPF
 {
@@ -10,10 +12,12 @@ namespace StudentAppWPF
     {
         private StudentRepository _repo;
         private Student _editingStudent;
+        private readonly string _currentLogin;
 
-        public MainWindow()
+        public MainWindow(string currentLogin = "")
         {
             InitializeComponent();
+            _currentLogin = currentLogin;
             _repo = new StudentRepository();
             LoadData();
         }
@@ -118,6 +122,12 @@ namespace StudentAppWPF
                     StatusLabel.Content = $"🗑️ Удалён: {student.FullName}";
                 }
             }
+        }
+
+        private void AdminButton_Click(object sender, RoutedEventArgs e)
+        {
+            var adminWindow = new AdminWindow(_currentLogin);
+            adminWindow.ShowDialog();
         }
 
         private void StudentsGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)

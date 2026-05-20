@@ -12,6 +12,7 @@ IF OBJECT_ID('sp_UpdateStudent', 'P') IS NOT NULL DROP PROCEDURE sp_UpdateStuden
 IF OBJECT_ID('sp_AddStudent', 'P') IS NOT NULL DROP PROCEDURE sp_AddStudent;
 IF OBJECT_ID('sp_GetStudentsFiltered', 'P') IS NOT NULL DROP PROCEDURE sp_GetStudentsFiltered;
 IF OBJECT_ID('vw_StudentDetails', 'V') IS NOT NULL DROP VIEW vw_StudentDetails;
+IF OBJECT_ID('Users', 'U') IS NOT NULL DROP TABLE Users;
 IF OBJECT_ID('Students', 'U') IS NOT NULL DROP TABLE Students;
 IF OBJECT_ID('Groups', 'U') IS NOT NULL DROP TABLE [Groups];
 IF OBJECT_ID('Specialties', 'U') IS NOT NULL DROP TABLE Specialties;
@@ -52,6 +53,12 @@ CREATE TABLE Students (
     Address NVARCHAR(200) NULL,
     EnrollmentDate DATE NOT NULL DEFAULT GETDATE(),
     IsStudying BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE Users (
+    UserId INT IDENTITY(1,1) PRIMARY KEY,
+    Login NVARCHAR(50) NOT NULL UNIQUE,
+    PasswordHash NVARCHAR(256) NOT NULL
 );
 
 -- Факультеты
@@ -201,4 +208,10 @@ BEGIN
     ELSE
         UPDATE Students SET IsStudying = 0 WHERE StudentId = @StudentId;
 END
+GO
+
+-- root / 123123 (SHA256 hash)
+IF NOT EXISTS (SELECT 1 FROM Users WHERE Login = 'root')
+    INSERT INTO Users (Login, PasswordHash)
+    VALUES ('root', '96cae35ce8a9b0244178bf28e4966c2ce1b8385723a96a6b838858cdd6ca0a1e');
 GO
